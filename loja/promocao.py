@@ -1,6 +1,11 @@
-class Promocao:
+from abc import ABC, abstractmethod
+
+class Promocao(ABC):
+
+    @abstractmethod
     def aplicar(self, subtotal):
-        raise NotImplementedError
+        pass
+
 
 
 class SemPromocao(Promocao):

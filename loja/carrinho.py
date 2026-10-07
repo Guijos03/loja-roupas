@@ -1,13 +1,21 @@
 from loja.calculo import frete, total_carrinho
 from loja.produto import Produto
-from loja.promocao import SemPromocao
+from loja.promocao import Promocao, SemPromocao
+
+
+class CarrinhoFinalizadoError(Exception):
+    """Erro levantado ao tentar adicionar peças a um carrinho já finalizado."""
 
 
 class Carrinho:
     def __init__(self, promocao=None):
+        if promocao is None:
+            promocao = SemPromocao()
+        if not isinstance(promocao, Promocao):
+            raise TypeError("promocao deve herdar de Promocao")
         self._itens = []
         self._finalizado = False
-        self._promocao = promocao if promocao is not None else SemPromocao()
+        self._promocao = promocao
 
     def adicionar(self, produto, quantidade=1):
         if self._finalizado:

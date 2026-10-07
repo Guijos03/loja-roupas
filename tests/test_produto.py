@@ -11,3 +11,13 @@ def test_produto_valido():
 def test_preco_zero_nao_e_aceito():
     with pytest.raises(ValueError):
         Produto("Camiseta básica", 0, "M")
+
+
+def test_tamanho_fora_da_tabela_nao_e_aceito():
+    with pytest.raises(ValueError):
+        Produto("Camiseta básica", 39.90, "XG")
+
+
+def test_nome_em_branco_nao_e_aceito():
+    with pytest.raises(ValueError):
+        Produto("   ", 39.90, "M")
