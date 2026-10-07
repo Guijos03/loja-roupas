@@ -14,3 +14,26 @@ class Produto:
 
     def descricao(self):
         return f"{self.nome} {self.tamanho}: R$ {self.preco:.2f}"
+
+
+
+class Camiseta(Produto):
+    
+    MANGAS = ("curta", "longa")
+    def __init__(self, nome, preco, tamanho, manga):
+        super().__init__(nome, preco, tamanho) # regras do Produto
+        if manga not in self.MANGAS:
+           raise ValueError(f"manga inválida: {manga}")
+        self.manga = manga
+
+    def descricao(self):
+        return f"{super().descricao()} · manga {self.manga}"
+
+    
+class Calca(Produto):
+    def __init__(self, nome, preco, tamanho, modelagem):
+        super().__init__(nome, preco, tamanho)
+        self.modelagem = modelagem
+        
+    def descricao(self):
+        return f"{super().descricao()} · {self.modelagem}"
