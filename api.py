@@ -14,8 +14,13 @@ CATALOGO = {
     3: Produto("Moletom", 159.90, "P"),
 }
 
-# provisório: na Fase 3-2 este carrinho é trocado por novo_carrinho()
-carrinho = Carrinho(Percentual(10))
+
+def novo_carrinho():
+    # promoção da semana: 10%. Trocar a promoção é trocar esta linha
+    return Carrinho(Percentual(10))
+
+
+carrinho = novo_carrinho()
 
 
 class ItemPedido(BaseModel):
@@ -62,3 +67,18 @@ def adicionar_item(item: ItemPedido):
         "quantidade": item.quantidade,
         "pecas_no_carrinho": carrinho.quantidade_de_pecas,
     }
+
+
+@app.get("/carrinho/total")
+def total_do_carrinho():
+    return {
+        "pecas": carrinho.quantidade_de_pecas,
+        "subtotal": round(carrinho.subtotal, 2),
+        "total": round(carrinho.total, 2),
+    }
+
+
+@app.delete("/carrinho", status_code=204)
+def esvaziar_carrinho():
+    global carrinho
+    carrinho = novo_carrinho()
